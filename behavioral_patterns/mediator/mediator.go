@@ -1,5 +1,7 @@
 package main
 
+import "fmt"
+
 /*
 Mediator is a behavioral design pattern that reduces
 coupling between components of a program by making
@@ -8,5 +10,5 @@ object.
 */
 
 func main() {
-
+	fmt.Println("that was mediator pattern")
 }
