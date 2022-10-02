@@ -9,6 +9,8 @@ them communicate indirectly, through a special mediator
 object.
 */
 
+
+
 func main() {
 	fmt.Println("that was mediator pattern")
 	fmt.Println("hello world")
