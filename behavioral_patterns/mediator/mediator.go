@@ -18,7 +18,55 @@ A departing train notifies the stations, which lets the
  next train in the queue to arrive.
 */
 
+type Train interface {
+	arrive()
+	depart()
+}
+
+type Manager interface {
+	canArrive(t Train) bool
+	notifyAboutDeparture()
+}
+
+type PassengerTrain struct {
+	m Manager
+}
+
+func (p *PassengerTrain) arrive() {
+	if p.m.canArrive(p) {
+		fmt.Println("Train arrived")
+		return
+	}
+
+	fmt.Println("Train arrive blocked!")
+}
+
+func (p *PassengerTrain) depart() {
+	fmt.Println("Train depart.")
+	p.m.notifyAboutDeparture()
+}
+
+type FreightTrain struct {
+	m Manager
+}
+
+func (p *FreightTrain) arrive() {
+	if p.m.canArrive(p) {
+		fmt.Println("Train arrived")
+		return
+	}
+
+	fmt.Println("Train arrive blocked!")
+}
+
+func (p *FreightTrain) depart() {
+	fmt.Println("Train depart.")
+	p.m.notifyAboutDeparture()
+}
+
+type StationManager struct {
+}
+
 func main() {
-	fmt.Println("that was mediator pattern")
-	fmt.Println("hello world")
+
 }
