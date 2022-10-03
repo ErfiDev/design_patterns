@@ -34,15 +34,15 @@ type PassengerTrain struct {
 
 func (p *PassengerTrain) arrive() {
 	if p.m.canArrive(p) {
-		fmt.Println("Train arrived")
+		fmt.Println("Passenger Train arrived")
 		return
 	}
 
-	fmt.Println("Train arrive blocked!")
+	fmt.Println("Passenger Train arrive blocked!")
 }
 
 func (p *PassengerTrain) depart() {
-	fmt.Println("Train depart.")
+	fmt.Println("Passenger Train depart.")
 	p.m.notifyAboutDeparture()
 }
 
@@ -52,21 +52,60 @@ type FreightTrain struct {
 
 func (p *FreightTrain) arrive() {
 	if p.m.canArrive(p) {
-		fmt.Println("Train arrived")
+		fmt.Println("Freight Train arrived")
 		return
 	}
 
-	fmt.Println("Train arrive blocked!")
+	fmt.Println("Freight Train arrive blocked!")
 }
 
 func (p *FreightTrain) depart() {
-	fmt.Println("Train depart.")
+	fmt.Println("Freight Train depart.")
 	p.m.notifyAboutDeparture()
 }
 
 type StationManager struct {
+	stationStatus bool
+	queue         []Train
+}
+
+func (s *StationManager) canArrive(t Train) bool {
+	// true == station is empty
+	if s.stationStatus {
+		s.stationStatus = false
+		return true
+	}
+
+	s.queue = append(s.queue, t)
+
+	return false
+}
+
+func (s *StationManager) notifyAboutDeparture() {
+	if !s.stationStatus {
+		s.stationStatus = true
+	}
+
+	if len(s.queue) > 0 {
+		firstTrain := s.queue[0]
+		s.queue = s.queue[1:]
+		firstTrain.arrive()
+	}
 }
 
 func main() {
+	sm := StationManager{
+		stationStatus: true,
+	}
 
+	t1 := PassengerTrain{
+		m: &sm,
+	}
+	t2 := FreightTrain{
+		m: &sm,
+	}
+
+	t1.arrive()
+	t2.arrive()
+	t1.depart()
 }
