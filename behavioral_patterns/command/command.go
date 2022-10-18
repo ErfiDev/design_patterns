@@ -38,12 +38,13 @@ type AddBtn struct {
 
 func (a *AddBtn) execute(value, by float64) float64 {
 	a.current = value + by
+	a.history = append(a.history, by)
 	return a.current
 }
 
 func (a *AddBtn) undo() float64 {
-	a.current = a.current - a.history[len(a.history)-1 : 0][0]
-	a.history = a.history[:len(a.history)-2]
+	a.current = a.current - a.history[len(a.history)-1]
+	a.history = a.history[0 : len(a.history)-2]
 	return a.current
 }
 
@@ -55,5 +56,9 @@ func main() {
 	calc.tap(15, addBtn)
 	fmt.Println(calc.current)
 	calc.undo()
+	fmt.Println(calc.current)
+	calc.tap(10, addBtn)
+	calc.tap(10, addBtn)
+	calc.tap(15, addBtn)
 	fmt.Println(calc.current)
 }
