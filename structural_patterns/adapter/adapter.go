@@ -5,6 +5,8 @@ Adapter is a structural design pattern that allows
 objects with incompatible interfaces to collaborate.
 */
 
-func main() {
 
+
+func main() {
+	fmt.Println("adapter pattern")
 }
