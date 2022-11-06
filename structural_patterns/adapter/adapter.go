@@ -34,6 +34,14 @@ func (w *WindowsAdapter) insertIntoLightningPort() {
 	fmt.Println("changing usb port to lightning port")
 }
 
+func MacConnector(c MacComputer) {
+	c.insertIntoLightningPort()
+}
+
 func main() {
-	fmt.Println("adapter pattern")
+	mac := new(Mac)
+	windows := new(Windows)
+
+	MacConnector(mac)
+	MacConnector(&WindowsAdapter{windows})
 }
